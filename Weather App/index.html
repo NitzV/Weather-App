@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A modern, real-time live weather application with premium design aesthetics.">
+  <title>AuraWeather - Live Weather Dashboard</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body class="theme-clear">
+  <div class="app-background-gradient"></div>
+  
+  <div class="dashboard-container">
+    <!-- Header -->
+    <header class="main-header">
+      <div class="logo-section">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+          <circle cx="12" cy="12" r="4" fill="currentColor" />
+        </svg>
+        <h1>AuraWeather</h1>
+      </div>
+      
+      <!-- Search Component -->
+      <div class="search-container">
+        <form id="search-form" autocomplete="off">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="city-input" placeholder="Search for a city..." required>
+            <button type="submit" id="search-btn">Search</button>
+          </div>
+        </form>
+        <div id="error-message" class="error-toast hidden"></div>
+      </div>
+
+      <!-- Settings / Unit Toggle -->
+      <div class="controls-section">
+        <div class="unit-toggle" id="unit-toggle" role="button" tabindex="0" aria-label="Toggle Temperature Unit">
+          <span class="unit-c active">°C</span>
+          <span class="unit-f">°F</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="dashboard-content hidden" id="weather-content">
+      
+      <!-- Left Column: Current Weather -->
+      <section class="current-weather-section">
+        <div class="glass-card main-weather-card">
+          <div class="location-details">
+            <h2 id="display-city">London</h2>
+            <p id="display-region">United Kingdom</p>
+            <p id="display-time" class="time-label">Friday, 8:00 PM</p>
+          </div>
+
+          <div class="weather-info-row">
+            <div class="weather-art" id="current-icon-container">
+              <!-- SVG Icons will be dynamically injected here -->
+            </div>
+            <div class="temp-display">
+              <span id="current-temp" class="temp-value">22</span>
+              <span class="temp-unit">°C</span>
+            </div>
+          </div>
+
+          <div class="weather-summary-text">
+            <p id="weather-description" class="weather-desc">Partly Cloudy</p>
+            <p id="feels-like-text" class="feels-like">Feels like 23°C</p>
+          </div>
+
+          <!-- Secondary Grid Parameters -->
+          <div class="stats-grid">
+            <div class="stat-box">
+              <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Wind Speed</span>
+                <span id="wind-val" class="stat-value">12 km/h</span>
+              </div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Humidity</span>
+                <span id="humidity-val" class="stat-value">64%</span>
+              </div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                  <path d="M12 2v20M2 12h20" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">UV Index</span>
+                <span id="uv-val" class="stat-value">3 (Mod)</span>
+              </div>
+            </div>
+
+            <div class="stat-box">
+              <div class="stat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 15.25" />
+                  <path d="M8 16v.01M8 20v.01M12 18v.01M12 22v.01M16 16v.01M16 20v.01" />
+                </svg>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Precipitation</span>
+                <span id="precip-val" class="stat-value">0 mm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Forecast Data -->
+      <section class="forecast-section">
+        <!-- 24-Hour Slider -->
+        <div class="glass-card hourly-card">
+          <h3>24-Hour Forecast</h3>
+          <div class="hourly-timeline" id="hourly-container">
+            <!-- Hourly item cards generated by JS -->
+          </div>
+        </div>
+
+        <!-- 7-Day Forecast -->
+        <div class="glass-card daily-card">
+          <h3>7-Day Forecast</h3>
+          <div class="daily-list" id="daily-container">
+            <!-- Daily list items generated by JS -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Welcome / Initial State screen -->
+    <div class="welcome-screen" id="welcome-screen">
+      <div class="glass-card welcome-card">
+        <svg class="welcome-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 15.25" />
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+        </svg>
+        <h2>Welcome to AuraWeather</h2>
+        <p>Discover real-time, live weather data for any city worldwide with interactive forecasts and dynamic designs.</p>
+        <button id="search-default-btn">Get Started with New York</button>
+      </div>
+    </div>
+
+    <!-- Loader -->
+    <div class="loader-overlay hidden" id="loader">
+      <div class="spinner"></div>
+      <p>Fetching atmospheric data...</p>
+    </div>
+  </div>
+</body>
+</html>
