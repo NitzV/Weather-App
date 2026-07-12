@@ -2,7 +2,7 @@
 
 A sleek, lightweight, full-stack weather application that delivers real-time weather forecasts and geocoding insights. The project bypasses traditional client-side limitations by utilizing a secure backend API proxy to fetch live atmospheric data streams.
 
-🔗 **Live Deployment:** [Paste your Render URL here]
+🔗 **Live Deployment:** https://weather-app-n6d4.onrender.com/
 
 ---
 
